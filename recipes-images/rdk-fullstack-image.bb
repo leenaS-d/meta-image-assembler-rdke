@@ -2,7 +2,6 @@ SUMMARY = "RDK Full Stack image"
 
 LICENSE = "MIT"
 IMAGE_INSTALL = " \
-                 packagegroup-foundation-layer \
                  packagegroup-vendor-layer \
                  packagegroup-middleware-generic \
                  packagegroup-application-layer \
