@@ -6,6 +6,11 @@ IMAGE_INSTALL = " \
                  packagegroup-middleware-layer \
                  packagegroup-application-layer \
                  "
+# VOLATILE_BINDS configuration can change for each layer, it has to be built locally across all layer
+IMAGE_INSTALL:append = " volatile-binds"
+# Todo: remove once https://github.com/rdk-e/meta-rdk-oss-reference/pull/429 is released
+IMAGE_INSTALL:append = " virtual/default-font"
+
 inherit core-image
 
 inherit custom-rootfs-creation
