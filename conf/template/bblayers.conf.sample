@@ -14,7 +14,6 @@ BBLAYERS ?= " \
   ${MANIFEST_PATH_OPENEMBEDDED}/meta-python \
   ${MANIFEST_PATH_OPENEMBEDDED}/meta-multimedia \
   ${MANIFEST_PATH_OPENEMBEDDED}/meta-networking \
-  ${MANIFEST_PATH_IMAGE_SUPPORT} \
   "
 
 # Generic layers
