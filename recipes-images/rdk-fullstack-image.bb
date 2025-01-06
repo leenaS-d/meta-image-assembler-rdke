@@ -30,6 +30,14 @@ wpeframework_binding_patch(){
     sed -i "s/127.0.0.1/0.0.0.0/g" ${IMAGE_ROOTFS}/etc/WPEFramework/config.json
 }
 
+#Control manager configuration. This needs to be removed once RDKEMW-901 is fixed.
+ROOTFS_POSTPROCESS_COMMAND += "ctrlm_community_remote_fix; "
+ctrlm_community_remote_fix(){
+    if [ ! -f ${IMAGE_ROOTFS}/opt/ctrlm_config.json ]; then
+        install -m 0644 ${MANIFEST_PATH_RDK_IMAGES}/conf/rdk-bt-rcu-config.json ${IMAGE_ROOTFS}/opt/ctrlm_config.json
+    fi
+}
+
 # Community specific rootfs_postprocess func
 
 ROOTFS_POSTPROCESS_COMMAND += "update_dropbearkey_path; "
