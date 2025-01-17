@@ -47,15 +47,6 @@ update_dropbearkey_path() {
    fi
 }
 
-# RDK-50713: Remove securemount dependency from wpa_supplicant.service
-# Revert once the actual fix is merged as part of the ticket
-ROOTFS_POSTPROCESS_COMMAND += "remove_securemount_dep_patch;"
-
-remove_securemount_dep_patch() {
-   sed -i '/Requires=securemount.service/d' ${IMAGE_ROOTFS}/lib/systemd/system/wpa_supplicant.service
-   sed -i 's/\bsecuremount\.service\b//g' ${IMAGE_ROOTFS}/lib/systemd/system/wpa_supplicant.service
-}
-
 # If vendor layer provides dobby configuration, then remove the generic config
 dobby_generic_config_patch(){
     if [ -f "${IMAGE_ROOTFS}/etc/dobby.generic.json" ]; then
@@ -67,3 +58,19 @@ dobby_generic_config_patch(){
     fi
 }
 ROOTFS_POSTPROCESS_COMMAND += "dobby_generic_config_patch; "
+
+# RDKVREFPLT-4463, RDKVREFPLT-4470: TODO: remove when the actual fix is available.
+update_community_webpa_url() {
+    python3 << EOF
+import json
+
+file_path = "${IMAGE_ROOTFS}/etc/partners_defaults.json"
+with open(file_path, 'r') as file:
+    data = json.load(file)
+data['community']['Device.X_RDK_WebPA_Server.URL'] = "http://webpa.rdkcentral.com:8080"
+with open(file_path, 'w') as file:
+    json.dump(data, file, indent=4)
+EOF
+}
+ROOTFS_POSTPROCESS_COMMAND += "update_community_webpa_url; "
+
