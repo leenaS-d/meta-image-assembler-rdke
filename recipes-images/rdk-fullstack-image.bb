@@ -68,7 +68,7 @@ dobby_generic_config_patch(){
 }
 ROOTFS_POSTPROCESS_COMMAND += "dobby_generic_config_patch; "
 
-# RDKVREFPLT-4463: TODO: remove when the actual fix is available.
+# RDKVREFPLT-4463, RDKVREFPLT-4470: TODO: remove when the actual fix is available.
 update_community_webpa_url() {
     python3 << EOF
 import json
