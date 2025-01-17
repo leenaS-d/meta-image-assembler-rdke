@@ -67,3 +67,18 @@ dobby_generic_config_patch(){
     fi
 }
 ROOTFS_POSTPROCESS_COMMAND += "dobby_generic_config_patch; "
+
+update_community_webpa_url() {
+    python3 << EOF
+import json
+
+file_path = "${IMAGE_ROOTFS}/etc/partners_defaults.json"
+with open(file_path, 'r') as file:
+    data = json.load(file)
+data['community']['Device.X_RDK_WebPA_Server.URL'] = "http://webpa.rdkcentral.com:8080"
+with open(file_path, 'w') as file:
+    json.dump(data, file, indent=4)
+EOF
+}
+ROOTFS_POSTPROCESS_COMMAND += "update_community_webpa_url; "
+
